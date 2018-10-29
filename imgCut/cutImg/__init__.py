@@ -41,19 +41,19 @@ def imageCut(imgFile,cutRegion):
 
 
 
-
-def allDeal(imgDir,xmlDir,imgSaveDir="./data"):
+def cutAll(imgDir,xmlDir,resize,imgSaveDir="./output"):
 	"""
 	imgDir --str-- image file dir
 	xmlDir --str-- xml file dir
 	example:
 		xmlDir="./xml"
 		imgDir="./img"
-		imgSaveDir="data"
+		resize =(200,200)
+		imgSaveDir="output"
 	"""
 
-	if os.path.exists("./Data"):
-		shutil.rmtree("./Data")
+	if os.path.exists("./output"):
+		shutil.rmtree("./output")
 		os.mkdir(imgSaveDir)
 	else:
 		os.mkdir(imgSaveDir)
@@ -70,8 +70,16 @@ def allDeal(imgDir,xmlDir,imgSaveDir="./data"):
 			name = imgName.split(".")
 			region = getRegion(xmlDir+"/"+oneDir+"/"+name[0]+".xml")
 			crop = imageCut(imgDir+"/"+oneDir+"/"+imgName,region)
+			
+			resImg = crop.resize(resize)
 
-			crop.save(imgSaveDir+"/"+oneDir+"/"+ name[0]+".jpg")
+			resImg.save(imgSaveDir+"/"+oneDir+"/"+ name[0]+".jpg")
 
 			print("sucessfully cut "+oneDir+"/" +name[0])
+
+
+
+
+
+
 
